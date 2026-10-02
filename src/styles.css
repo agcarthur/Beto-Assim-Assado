@@ -1,0 +1,106 @@
+/* Cores extraídas da logo oficial */
+:root {
+  --verde: #084025;
+  --verde-escuro: #052c19;
+  --dourado: #c9962f;
+  --creme: #f7f1e3;
+  --texto: #1e1e1e;
+  --serifa: 'Playfair Display', Georgia, serif;
+  --sans: 'Montserrat', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--texto);
+  background: var(--creme);
+}
+
+img { max-width: 100%; display: block; }
+
+/* Cabeçalho */
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: var(--verde);
+  border-bottom: 2px solid var(--dourado);
+}
+.topo__marca img { height: 56px; width: auto; }
+.topo__nav { display: flex; gap: 1.25rem; }
+.topo__nav a {
+  color: var(--creme);
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+.topo__nav a:hover { color: var(--dourado); }
+
+/* Hero */
+.hero { position: relative; min-height: 70vh; display: grid; place-items: center; }
+.hero--logo { background: var(--verde); padding: 3rem 1rem; }
+.hero--logo .hero__logo { width: min(560px, 90vw); height: auto; }
+.hero--foto { overflow: hidden; background: var(--verde-escuro); }
+.hero__foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero__texto {
+  position: relative;
+  padding: 1rem;
+  background: rgba(8, 64, 37, 0.85);
+  border: 1px solid var(--dourado);
+  border-radius: 8px;
+}
+.hero__texto .hero__logo { width: min(360px, 70vw); height: auto; }
+
+/* Seções */
+.secao { padding: 4rem 1rem; max-width: 1200px; margin: 0 auto; }
+.secao--escura { max-width: none; background: var(--verde); color: var(--creme); }
+.secao__titulo {
+  font-family: var(--serifa);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  text-align: center;
+  margin: 0 0 2rem;
+  color: inherit;
+}
+.secao__titulo::after {
+  content: '★ ★ ★ ★ ★';
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--dourado);
+  letter-spacing: 0.2em;
+}
+
+/* Pratos */
+.pratos { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.prato { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); }
+.prato__foto { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.prato__corpo { padding: 1rem 1.25rem 1.5rem; }
+.prato__corpo h3 { font-family: var(--serifa); margin: 0 0 0.5rem; color: var(--verde); }
+.prato__corpo p { margin: 0; line-height: 1.5; }
+
+/* Galeria */
+.galeria {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.galeria__foto { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; }
+
+/* Rodapé */
+.rodape {
+  padding: 2rem 1rem;
+  text-align: center;
+  background: var(--verde-escuro);
+  color: var(--creme);
+  font-size: 0.9rem;
+}

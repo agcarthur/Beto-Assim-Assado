@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beto Assim & Assado — Lagoa Santa</title>
+    <link rel="icon" type="image/png" href="/images/logo/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="topo">
+      <a href="#" class="topo__marca"><img id="logo-topo" /></a>
+      <nav class="topo__nav">
+        <a href="#pratos" data-secao="pratos">Pratos</a>
+        <a href="#galeria" data-secao="galeria">Galeria</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="hero"></section>
+
+      <section class="secao" id="pratos" hidden>
+        <h2 class="secao__titulo">Nossos pratos</h2>
+        <div class="pratos" id="lista-pratos"></div>
+      </section>
+
+      <section class="secao secao--escura" id="galeria" hidden>
+        <h2 class="secao__titulo">Galeria</h2>
+        <div class="galeria" id="lista-galeria"></div>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      <p>Beto Assim & Assado · Lagoa Santa</p>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -16,7 +16,7 @@ for (const img of todasAsImagens()) {
   }
 }
 
-if (!hero) console.warn('! hero sem foto definida — usando a logo no lugar.');
+if (!hero) console.warn('! hero sem foto definida — aguardando a foto da picanha.');
 const semFoto = pratos.filter((p) => !p.foto).map((p) => p.nome);
 if (semFoto.length) console.warn(`! pratos sem foto: ${semFoto.join(', ')}`);
 

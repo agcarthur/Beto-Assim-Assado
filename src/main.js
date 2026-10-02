@@ -1,7 +1,7 @@
 import './styles.css';
 import { modoRascunho, logo, hero, galeria } from './config/images.js';
 import { contato, linkWhatsApp, linkReserva } from './config/contato.js';
-import { montarSecaoCardapio } from './cardapio/render.js';
+import { montarVitrine } from './cardapio/vitrine.js';
 
 const $ = (id) => document.getElementById(id);
 
@@ -77,8 +77,8 @@ if (hero?.video) {
 else if (modoRascunho) heroFoto.append(espacoFoto('Foto da picanha · aguardando envio'));
 else heroFoto.hidden = true;
 
-// Cardápio (conteúdo oficial em conteudo/cardapio-ifood.md)
-$('cardapio').hidden = !montarSecaoCardapio($('menu-cardapio'), { img });
+// Nosso Cardápio: vitrine de pratos que leva ao iFood (nomes e links de conteudo/cardapio-ifood.md)
+$('cardapio').hidden = !montarVitrine($('vitrine-cardapio'), { img, modoRascunho });
 
 // Galeria
 const listaGaleria = $('lista-galeria');

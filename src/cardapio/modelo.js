@@ -1,12 +1,14 @@
 /**
- * Transforma o texto copiado do iFood (conteudo/cardapio-ifood.md, fonte oficial)
- * no cardápio do site. Nenhum nome, descrição ou preço é digitado à mão: tudo sai
- * do texto. Os ajustes (src/config/cardapio.js) só dizem como exibir.
+ * Lê o texto copiado do iFood (conteudo/cardapio-ifood.md) e monta a vitrine
+ * "Nosso Cardápio". Nome e link de cada prato saem do texto do iFood, nunca
+ * digitados à mão; a configuração (src/config/cardapio.js) só escolhe quais
+ * pratos entram e com qual foto.
  *
  * Não depende do navegador: o mesmo código roda em scripts/verificar-cardapio.mjs.
  */
 
 const LINK = /\[([^\]]*)\]\(([^)]*)\)/g;
+export const LINK_IFOOD = /^https:\/\/www\.ifood\.com\.br\//;
 
 /** Lê o texto do iFood: categorias na ordem do arquivo, itens exatamente como estão. */
 export function lerIfood(texto) {
@@ -54,140 +56,36 @@ function interpretarItem({ id, url, linhas }) {
     } else if (rotulo === 'Fechado') item.statusLoja = rotulo; // status da loja, não do prato
     else throw new Error(`Linha não reconhecida no item ${id}: ${rotulo}`);
   }
-  if (!item.preco) throw new Error(`Item sem preço: ${id}`);
   return item;
 }
 
-/** Campos que precisam ser idênticos quando o mesmo produto aparece em mais de uma categoria. */
-export const CAMPOS_PRODUTO = ['nome', 'descricao', 'servePorcao', 'preco', 'precoAnterior'];
+/** Pratos do iFood por id (cada prato uma vez, mesmo se repetido em categorias). */
+export function pratosIfood(texto) {
+  const pratos = new Map();
+  for (const cat of lerIfood(texto)) for (const item of cat.itens) if (!pratos.has(item.id)) pratos.set(item.id, item);
+  return pratos;
+}
 
 /**
- * Monta as abas do cardápio:
- *  - cada produto aparece uma única vez, na primeira categoria (fora as de selo) em que está;
- *  - categorias de selo (ex.: "Destaques") viram um selo no produto em vez de aba;
- *  - um produto repetido com conteúdo diferente interrompe tudo (precisa de decisão humana).
+ * Monta os cards da vitrine. Cada item da configuração aponta para um prato do
+ * iFood pelo id (`?prato=` do link); nome e link vêm de lá. Erros interrompem o
+ * build em vez de exibir algo errado.
  */
-export function montarCardapio(texto, ajustes) {
-  const categoriasIfood = lerIfood(texto);
-  const produtos = new Map(); // id -> { item, categorias: [] }
-
-  for (const cat of categoriasIfood) {
-    for (const item of cat.itens) {
-      const existente = produtos.get(item.id);
-      if (existente) {
-        const diferentes = CAMPOS_PRODUTO.filter((c) => existente.item[c] !== item[c]);
-        if (diferentes.length) {
-          throw new Error(
-            `"${item.nome}" aparece em "${existente.categorias[0]}" e "${cat.titulo}" com ` +
-              `${diferentes.join(', ')} diferente(s). Confirmar com o restaurante qual vale.`,
-          );
-        }
-        existente.categorias.push(cat.titulo);
-      } else {
-        produtos.set(item.id, { item, categorias: [cat.titulo] });
-      }
+export function prepararVitrine(texto, config) {
+  const pratos = pratosIfood(texto);
+  return config.itens.map((c) => {
+    const prato = pratos.get(c.ifood);
+    if (!prato) throw new Error(`Prato ${c.ifood} não existe em conteudo/cardapio-ifood.md.`);
+    if (c.descricaoCurta && !prato.descricao.includes(c.descricaoCurta)) {
+      throw new Error(`A descrição curta de "${prato.nome}" não é um trecho da descrição do iFood.`);
     }
-  }
-
-  const selos = ajustes.categoriasSelo ?? {};
-  const abas = [];
-  const porTitulo = new Map();
-  const garantirAba = (titulo) => {
-    if (!porTitulo.has(titulo)) {
-      const aba = {
-        id: slug(ajustes.titulos?.[titulo] ?? titulo),
-        titulo: ajustes.titulos?.[titulo] ?? titulo,
-        tituloIfood: titulo,
-        itens: [],
-      };
-      porTitulo.set(titulo, aba);
-      abas.push(aba);
-    }
-    return porTitulo.get(titulo);
-  };
-  // Abas na ordem do iFood; categorias de selo só viram aba se tiverem produto exclusivo.
-  for (const cat of categoriasIfood) if (!(cat.titulo in selos)) garantirAba(cat.titulo);
-
-  // Percorre na ordem do iFood para manter a ordem original dentro de cada aba.
-  for (const cat of categoriasIfood) {
-    for (const { id } of cat.itens) {
-      const { item, categorias } = produtos.get(id);
-      const casa = categorias.find((c) => !(c in selos)) ?? categorias[0];
-      if (casa !== cat.titulo || porTitulo.get(casa)?.itens.some((i) => i.id === id)) continue;
-      garantirAba(casa).itens.push(
-        prepararItem(item, {
-          categorias,
-          selos: categorias.filter((c) => c in selos).map((c) => selos[c]),
-          ajuste: ajustes.itens?.[item.id] ?? {},
-        }),
-      );
-    }
-  }
-
-  return abas.filter((aba) => aba.itens.length);
-}
-
-function prepararItem(item, { categorias, selos, ajuste }) {
-  // "Serve até 3 pessoas | resto da descrição"
-  let serve = null;
-  let resto = item.descricao;
-  const corte = resto.indexOf(' | ');
-  if (corte > 0 && /^Serve /.test(resto)) {
-    serve = resto.slice(0, corte);
-    resto = resto.slice(corte + 3);
-  }
-
-  // Subtítulo (ex.: "200g de picanha argentina in natura"), indicado nos ajustes
-  let subtitulo = null;
-  if (ajuste.subtitulo) {
-    if (!resto.startsWith(`${ajuste.subtitulo} `)) {
-      throw new Error(`Subtítulo de "${item.nome}" não corresponde ao início da descrição.`);
-    }
-    subtitulo = ajuste.subtitulo;
-    resto = resto.slice(subtitulo.length + 1);
-  }
-
-  // "A partir de R$ 39,14" -> prefixo + valor
-  const [, precoPrefixo = '', preco] = item.preco.match(/^(.*?)\s*(R\$ [\d.,]+)$/) ?? [];
-  if (!preco) throw new Error(`Preço em formato desconhecido em "${item.nome}": ${item.preco}`);
-
-  return {
-    id: item.id,
-    url: item.url,
-    nome: item.nome,
-    descricaoOriginal: item.descricao,
-    serve,
-    servePorcao: item.servePorcao ?? null,
-    subtitulo,
-    descricao: resto,
-    dias: item.descricao.match(/Disponível apenas ([^.]+)\./)?.[0].slice(0, -1) ?? null,
-    precoOriginal: item.preco,
-    precoPrefixo: precoPrefixo || null,
-    preco,
-    precoAnterior: item.precoAnterior ?? null,
-    categorias,
-    selos,
-    foto: ajuste.foto ?? null,
-  };
-}
-
-/** Textos de "quantas pessoas serve" a exibir, sem repetir a mesma informação. */
-export function infoPessoas(item) {
-  const lista = [];
-  if (item.serve) lista.push(item.serve);
-  if (item.servePorcao) {
-    const numero = item.servePorcao.match(/\d+/)[0];
-    // Só repete o campo do iFood se ele trouxer um número que a descrição não tem
-    if (!(item.serve?.match(/\d+/g) ?? []).includes(numero)) lista.push(item.servePorcao);
-  }
-  return lista;
-}
-
-function slug(texto) {
-  return texto
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
+    if (!LINK_IFOOD.test(prato.url)) throw new Error(`Link de "${prato.nome}" não é do iFood: ${prato.url}`);
+    return {
+      id: prato.id,
+      nome: prato.nome,
+      descricaoCurta: c.descricaoCurta ?? null,
+      link: prato.url,
+      foto: c.foto ?? null,
+    };
+  });
 }

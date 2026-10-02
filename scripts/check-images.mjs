@@ -6,19 +6,21 @@ import { todasAsImagens, hero, pratos } from '../src/config/images.js';
 const publicDir = new URL('../public', import.meta.url).pathname;
 let falhas = 0;
 
-for (const img of todasAsImagens()) {
-  const arquivo = join(publicDir, img.src);
+for (const caminho of todasAsImagens()) {
+  const arquivo = join(publicDir, caminho);
   if (!existsSync(arquivo) || statSync(arquivo).size === 0) {
-    console.error(`✗ ausente ou vazio: ${img.src}`);
+    console.error(`✗ ausente ou vazio: ${caminho}`);
     falhas++;
   } else {
-    console.log(`✓ ${img.src}`);
+    console.log(`✓ ${caminho}`);
   }
 }
 
 if (!hero) console.warn('! hero sem foto definida — aguardando a foto da picanha.');
-const semFoto = pratos.filter((p) => !p.foto).map((p) => p.nome);
+const semFoto = pratos.filter((p) => !p.foto).map((p) => p.nome ?? p.id);
 if (semFoto.length) console.warn(`! pratos sem foto: ${semFoto.join(', ')}`);
+const semNome = pratos.filter((p) => !p.nome).map((p) => p.id);
+if (semNome.length) console.warn(`! pratos sem nome informado: ${semNome.join(', ')}`);
 
 if (falhas) {
   console.error(`\n${falhas} imagem(ns) com problema.`);

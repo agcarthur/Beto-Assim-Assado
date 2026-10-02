@@ -2,19 +2,20 @@
  * Mapeamento central de todas as imagens do site.
  *
  * Para trocar uma foto, substitua o arquivo em public/images/... ou altere
- * o caminho `src` aqui. Caminhos são relativos à pasta public/ (sem "/" inicial).
+ * o caminho aqui. Caminhos são relativos à pasta public/ (sem "/" inicial).
+ * Cada foto tem a versão AVIF (`avif`, o arquivo original enviado) e uma cópia
+ * JPG (`src`) para navegadores que não abrem AVIF.
  *
  * Regras do projeto:
  *  - Usar apenas fotos reais do restaurante (nada de banco de imagens ou IA).
  *  - Só associar uma foto a um prato quando a correspondência for certa.
- *    Na dúvida, deixe `foto: null` e o prato aparece sem imagem.
- *  - Não inventar pratos, descrições ou preços: `preco` só quando informado.
+ *  - Não inventar pratos, descrições ou preços: preencher só com dados informados.
  */
 
 /**
- * Enquanto `true`, o site mostra molduras marcadas "aguardando foto" onde as
- * fotos reais vão entrar, para visualizar o layout. Trocar para `false` antes
- * de publicar o site oficial: seções sem conteúdo passam a ficar ocultas.
+ * Enquanto `true`, o site mostra "a definir" onde faltam dados (nomes dos
+ * pratos, contatos) e molduras onde faltam fotos. Trocar para `false` antes
+ * de publicar o site oficial: o que estiver sem conteúdo passa a ficar oculto.
  */
 export const modoRascunho = true;
 
@@ -27,38 +28,81 @@ export const logo = {
 };
 
 /**
- * Foto principal do HERO — a melhor foto real de picanha.
- * Exemplo: { src: 'images/pratos/picanha-na-chapa.jpg', alt: 'Picanha fatiada na chapa' }
+ * Fotos reais enviadas pelo restaurante (originais em fotos-originais/).
+ * Os nomes dos arquivos descrevem o que aparece na foto, não o nome do prato
+ * no cardápio, que ainda não foi informado.
  */
-export const hero = null;
+const fotos = {
+  // fotos-originais/ass5.avif
+  chapaCompleta: {
+    src: 'images/pratos/chapa-carne-acompanhamentos.jpg',
+    avif: 'images/pratos/chapa-carne-acompanhamentos.avif',
+    alt: 'Carne fatiada servida na chapa de ferro, com acompanhamentos',
+  },
+  // fotos-originais/ass3.avif
+  cortesNaChapa: {
+    src: 'images/pratos/cortes-na-chapa.jpg',
+    avif: 'images/pratos/cortes-na-chapa.avif',
+    alt: 'Cortes de carne grelhados na chapa de ferro',
+  },
+  // fotos-originais/ASS1.avif
+  carneMolhoBranco: {
+    src: 'images/pratos/carne-molho-branco.jpg',
+    avif: 'images/pratos/carne-molho-branco.avif',
+    alt: 'Carne fatiada na chapa coberta com molho branco e cebolinha',
+  },
+  // fotos-originais/Ass2.avif
+  chapasFrangoECarne: {
+    src: 'images/pratos/chapas-frango-e-carne.jpg',
+    avif: 'images/pratos/chapas-frango-e-carne.avif',
+    alt: 'Chapas com frango grelhado e com carne ao molho branco, servidas com arroz',
+  },
+  // fotos-originais/ass6.avif
+  ovosTorresmoCouve: {
+    src: 'images/pratos/ovos-torresmo-couve.jpg',
+    avif: 'images/pratos/ovos-torresmo-couve.avif',
+    alt: 'Prato com ovos fritos, torresmo e couve',
+  },
+  // fotos-originais/ass4.avif
+  saladaCroutons: {
+    src: 'images/pratos/salada-croutons.jpg',
+    avif: 'images/pratos/salada-croutons.avif',
+    alt: 'Salada com folhas, tomate-cereja, cebola roxa e croutons',
+  },
+};
+
+/** Foto principal do HERO — a carne na chapa como protagonista. */
+export const hero = fotos.chapaCompleta;
 
 /**
- * Pratos da seção "Cardápio".
- *
- * Exemplo de item:
- *   {
- *     id: 'picanha-na-chapa',
- *     nome: 'Picanha na chapa',
- *     descricao: 'Texto fornecido pelo restaurante.',   // opcional
- *     preco: 'R$ 00,00',                                  // opcional, só se informado
- *     foto: { src: 'images/pratos/picanha-na-chapa.jpg', alt: 'Picanha na chapa' },
- *   }
+ * Pratos da seção "Cardápio". `nome`, `descricao` e `preco` ficam `null`
+ * até o restaurante informar; não preencher por suposição.
  */
-export const pratos = [];
+export const pratos = [
+  { id: 'cortes-na-chapa', nome: null, descricao: null, preco: null, foto: fotos.cortesNaChapa },
+  { id: 'carne-molho-branco', nome: null, descricao: null, preco: null, foto: fotos.carneMolhoBranco },
+  { id: 'chapas-frango-e-carne', nome: null, descricao: null, preco: null, foto: fotos.chapasFrangoECarne },
+  { id: 'ovos-torresmo-couve', nome: null, descricao: null, preco: null, foto: fotos.ovosTorresmoCouve },
+  { id: 'salada-croutons', nome: null, descricao: null, preco: null, foto: fotos.saladaCroutons },
+];
 
-/**
- * Fotos de carnes, produtos e ambiente para a galeria.
- * A primeira foto aparece maior.
- * Exemplo: { src: 'images/galeria/cortes-de-carne.jpg', alt: 'Cortes de carne no balcão' }
- */
-export const galeria = [];
+/** Fotos da galeria. A primeira aparece maior. */
+export const galeria = [
+  fotos.chapaCompleta,
+  fotos.cortesNaChapa,
+  fotos.carneMolhoBranco,
+  fotos.chapasFrangoECarne,
+  fotos.ovosTorresmoCouve,
+];
 
-/** Lista plana de todas as imagens configuradas — usada na verificação. */
+/** Lista de todos os arquivos de imagem configurados — usada na verificação. */
 export function todasAsImagens() {
-  return [
+  const imagens = [
     ...Object.values(logo),
     ...(hero ? [hero] : []),
     ...pratos.map((p) => p.foto).filter(Boolean),
     ...galeria,
   ];
+  const caminhos = imagens.flatMap((img) => [img.src, img.avif].filter(Boolean));
+  return [...new Set(caminhos)];
 }

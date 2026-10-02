@@ -39,6 +39,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 img { max-width: 100%; display: block; }
+/* <picture> com AVIF + JPG: ocupa a moldura e a imagem preenche sem distorcer */
+.foto { display: block; }
+.foto img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
 a { color: inherit; }
 h1, h2, h3 { font-family: var(--serifa); font-weight: 600; line-height: 1.15; text-wrap: balance; margin: 0; }
 :focus-visible { outline: 2px solid var(--ouro); outline-offset: 3px; }
@@ -138,8 +141,7 @@ h1, h2, h3 { font-family: var(--serifa); font-weight: 600; line-height: 1.15; te
   order: 2;
   position: relative;
   margin: 0;
-  aspect-ratio: 4 / 5;
-  max-height: 78vh;
+  aspect-ratio: 4 / 3; /* mesma proporção das fotos enviadas: nada da chapa é cortado */
   width: 100%;
   max-width: 100%;
   justify-self: end;
@@ -185,10 +187,14 @@ h1, h2, h3 { font-family: var(--serifa); font-weight: 600; line-height: 1.15; te
 
 /* Cardápio */
 .pratos {
+  /* 3 por linha; os primeiros ficam maiores (2 por linha) para não sobrar card sozinho */
   display: grid;
   gap: clamp(1.25rem, 3vw, 2.5rem);
-  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
+.pratos > * { grid-column: span 2; }
+.pratos:has(> :last-child:nth-child(3n + 2)) > :nth-child(-n + 2),
+.pratos:has(> :last-child:nth-child(3n + 1)) > :nth-child(-n + 4) { grid-column: span 3; }
 .prato {
   display: flex;
   flex-direction: column;
@@ -198,10 +204,13 @@ h1, h2, h3 { font-family: var(--serifa); font-weight: 600; line-height: 1.15; te
   box-shadow: 0 1px 0 var(--creme-2), 0 18px 40px -24px rgba(12, 23, 18, 0.35);
 }
 .prato__foto { aspect-ratio: 4 / 3; overflow: hidden; background: var(--noite); }
-.prato__foto > * { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.prato__foto > * { width: 100%; height: 100%; }
+.prato__foto img { transition: transform 0.6s ease; }
+@media (prefers-reduced-motion: reduce) { .prato__foto img { transition: none; } }
 .prato:hover .prato__foto img { transform: scale(1.04); }
 .prato__corpo { display: grid; gap: 0.5rem; padding: 1.5rem 1.5rem 1.75rem; }
 .prato__corpo h3 { font-size: 1.45rem; color: var(--verde); }
+.prato__corpo h3.a-definir { font-family: var(--sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #8a6a24; }
 .prato__corpo p { margin: 0; color: var(--tinta-suave); font-size: 0.95rem; }
 .prato__preco {
   margin-top: 0.5rem;
@@ -347,8 +356,6 @@ h1, h2, h3 { font-family: var(--serifa); font-weight: 600; line-height: 1.15; te
   .hero { grid-template-columns: minmax(0, 1fr); padding-top: 0; gap: 2rem; }
   .hero__foto {
     order: 0;
-    aspect-ratio: 4 / 5;
-    max-height: none;
     margin-inline: calc(var(--gutter) * -1);
     width: calc(100% + var(--gutter) * 2);
     max-width: none;
@@ -361,6 +368,12 @@ h1, h2, h3 { font-family: var(--serifa); font-weight: 600; line-height: 1.15; te
   .hero .acoes .botao { flex: 1 1 200px; }
 
   .galeria { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 42vw; }
+
+  .pratos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pratos > *,
+  .pratos:has(> :last-child:nth-child(3n + 2)) > :nth-child(-n + 2),
+  .pratos:has(> :last-child:nth-child(3n + 1)) > :nth-child(-n + 4) { grid-column: span 1; }
+  .pratos:has(> :last-child:nth-child(odd)) > :first-child { grid-column: span 2; }
 
   /* Barra fixa de ações */
   body { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
@@ -393,6 +406,11 @@ h1, h2, h3 { font-family: var(--serifa); font-weight: 600; line-height: 1.15; te
   .barra-movel a + a { border-left: 1px solid rgba(201, 165, 87, 0.2); }
   .barra-movel svg { width: 20px; height: 20px; }
   .barra-movel__whats { background: var(--ouro); color: var(--noite) !important; }
+}
+
+@media (max-width: 560px) {
+  .pratos { grid-template-columns: minmax(0, 1fr); }
+  .pratos:has(> :last-child:nth-child(odd)) > :first-child { grid-column: span 1; }
 }
 
 @media (max-width: 480px) {

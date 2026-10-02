@@ -4,18 +4,29 @@ import { contato, linkWhatsApp, linkReserva } from './config/contato.js';
 
 const $ = (id) => document.getElementById(id);
 
-function img({ src, alt }, { eager = false, className } = {}) {
+/** Cria a imagem; com `avif`, usa <picture> e o JPG de `src` como reserva. */
+function img({ src, avif, alt }, { eager = false, className } = {}) {
   const el = document.createElement('img');
   el.src = src;
   el.alt = alt;
   el.loading = eager ? 'eager' : 'lazy';
   el.decoding = 'async';
-  if (className) el.className = className;
+  if (eager) el.fetchPriority = 'high';
   el.addEventListener('error', () => {
     el.dataset.erro = 'true';
-    console.error(`Imagem não carregou: ${src}`);
+    console.error(`Imagem não carregou: ${el.currentSrc || src}`);
   });
-  return el;
+  if (!avif) {
+    if (className) el.className = className;
+    return el;
+  }
+  const picture = document.createElement('picture');
+  picture.className = `foto ${className ?? ''}`;
+  const source = document.createElement('source');
+  source.srcset = avif;
+  source.type = 'image/avif';
+  picture.append(source, el);
+  return picture;
 }
 
 /** Moldura marcada para uma foto real que ainda não foi enviada. */
@@ -47,10 +58,17 @@ for (const prato of pratos) {
   const moldura = document.createElement('div');
   moldura.className = 'prato__foto';
   moldura.append(prato.foto ? img(prato.foto) : espacoFoto('Foto do prato · aguardando envio'));
+  card.append(moldura);
+  // Sem nome informado: em rascunho mostra "a definir"; no site oficial, só a foto.
+  if (!prato.nome && !modoRascunho) {
+    listaPratos.append(card);
+    continue;
+  }
   const corpo = document.createElement('div');
   corpo.className = 'prato__corpo';
   const titulo = document.createElement('h3');
-  titulo.textContent = prato.nome;
+  titulo.textContent = prato.nome ?? 'Nome do prato a definir';
+  if (!prato.nome) titulo.className = 'a-definir';
   corpo.append(titulo);
   if (prato.descricao) {
     const p = document.createElement('p');
@@ -63,7 +81,7 @@ for (const prato of pratos) {
     preco.textContent = prato.preco;
     corpo.append(preco);
   }
-  card.append(moldura, corpo);
+  card.append(corpo);
   listaPratos.append(card);
 }
 if (!pratos.length && modoRascunho) {

@@ -156,6 +156,7 @@ h1, h2, h3 { font-family: var(--serifa); font-weight: 600; line-height: 1.15; te
   z-index: -1;
 }
 .hero__foto > * { width: 100%; height: 100%; object-fit: cover; border-radius: var(--raio); }
+.hero__foto video { display: block; } /* como a imagem: sem o vão de linha que aumentaria o espaço */
 
 .whats-linha {
   display: inline-flex;

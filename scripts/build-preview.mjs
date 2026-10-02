@@ -1,6 +1,6 @@
 // Gera preview/index.html: o build de dist/ em um único HTML (CSS e JS embutidos),
 // com as imagens copiadas ao lado. Usado para publicar o Preview.
-import { cpSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 
 const dist = new URL('../dist/', import.meta.url);
 const saida = new URL('../preview/', import.meta.url);
@@ -24,4 +24,5 @@ writeFileSync(
   `${head.trim()}\n<style>${ler('.css')}</style>\n${body.trim()}\n<script type="module">${ler('.js')}</script>\n`,
 );
 cpSync(new URL('images/', dist), new URL('images/', saida), { recursive: true });
+if (existsSync(new URL('videos/', dist))) cpSync(new URL('videos/', dist), new URL('videos/', saida), { recursive: true });
 console.log('Preview gerado em preview/');

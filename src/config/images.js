@@ -71,8 +71,19 @@ const fotos = {
   },
 };
 
-/** Foto principal do HERO — a carne na chapa como protagonista. */
-export const hero = fotos.chapaCompleta;
+/**
+ * Mídia principal do HERO: vídeo do restaurante. O original é vertical (9:16,
+ * em videos-originais/); esta versão é 4:3, mesma proporção do espaço do hero,
+ * com o vídeo inteiro no centro e as laterais preenchidas pelo próprio vídeo
+ * desfocado. `poster` é um quadro do vídeo, exibido enquanto ele carrega.
+ */
+export const hero = {
+  video: 'videos/hero/hero-video.mp4',
+  /** Mesmo vídeo em WebM (VP9), alternativa para navegadores sem H.264. */
+  webm: 'videos/hero/hero-video.webm',
+  poster: 'videos/hero/hero-video-poster.jpg',
+  alt: 'Vídeo do Beto Assim & Assado: pratos na chapa, salão e música ao vivo',
+};
 
 /**
  * Pratos da seção "Cardápio". `nome`, `descricao` e `preco` ficam `null`
@@ -95,7 +106,7 @@ export const galeria = [
   fotos.ovosTorresmoCouve,
 ];
 
-/** Lista de todos os arquivos de imagem configurados — usada na verificação. */
+/** Lista de todos os arquivos de imagem e vídeo configurados — usada na verificação. */
 export function todasAsImagens() {
   const imagens = [
     ...Object.values(logo),
@@ -103,6 +114,6 @@ export function todasAsImagens() {
     ...pratos.map((p) => p.foto).filter(Boolean),
     ...galeria,
   ];
-  const caminhos = imagens.flatMap((img) => [img.src, img.avif].filter(Boolean));
+  const caminhos = imagens.flatMap((img) => [img.src, img.avif, img.video, img.webm, img.poster].filter(Boolean));
   return [...new Set(caminhos)];
 }

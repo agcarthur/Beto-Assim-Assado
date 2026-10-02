@@ -44,9 +44,35 @@ for (const id of ['logo-topo', 'logo-hero', 'logo-rodape']) {
   $(id).alt = logo.emblema.alt;
 }
 
+/** Vídeo em loop, sem som e sem controles, que toca sozinho também no celular. */
+function video({ video: mp4, webm, poster, alt }) {
+  const el = document.createElement('video');
+  // Atributos (e não só propriedades) para o autoplay funcionar no Safari/iOS.
+  for (const attr of ['autoplay', 'muted', 'loop', 'playsinline']) el.setAttribute(attr, '');
+  el.muted = true;
+  el.preload = 'auto';
+  el.poster = poster;
+  el.disablePictureInPicture = true;
+  el.setAttribute('aria-label', alt);
+  // O navegador usa o primeiro formato que consegue tocar.
+  for (const [src, type] of [[mp4, 'video/mp4; codecs="avc1.640028"'], [webm, 'video/webm; codecs="vp9"']]) {
+    if (!src) continue;
+    const source = document.createElement('source');
+    source.src = src;
+    source.type = type;
+    source.addEventListener('error', () => console.error(`Vídeo não carregou: ${src}`));
+    el.append(source);
+  }
+  return el;
+}
+
 // Hero
 const heroFoto = $('hero-foto');
-if (hero) heroFoto.append(img(hero, { eager: true }));
+if (hero?.video) {
+  const el = video(hero);
+  heroFoto.append(el);
+  el.play().catch(() => {}); // se o navegador bloquear o autoplay, fica o quadro de capa
+} else if (hero) heroFoto.append(img(hero, { eager: true }));
 else if (modoRascunho) heroFoto.append(espacoFoto('Foto da picanha · aguardando envio'));
 else heroFoto.hidden = true;
 

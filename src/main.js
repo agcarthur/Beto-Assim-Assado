@@ -2,6 +2,7 @@ import './styles.css';
 import { modoRascunho, logo, hero, galeria } from './config/images.js';
 import { contato, linkWhatsApp, linkReserva } from './config/contato.js';
 import { montarVitrine } from './cardapio/vitrine.js';
+import { montarLocalizacao } from './localizacao.js';
 
 const $ = (id) => document.getElementById(id);
 
@@ -89,6 +90,9 @@ if (!galeria.length && modoRascunho) {
   }
 }
 $('galeria').hidden = !galeria.length && !modoRascunho;
+
+// Localização: mapa do Google ao fundo + card com endereço
+montarLocalizacao($('localizacao'));
 
 // Ações (reserva, iFood, WhatsApp)
 const links = {

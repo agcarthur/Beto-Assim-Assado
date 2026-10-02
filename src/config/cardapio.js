@@ -25,6 +25,10 @@ export const vitrineCardapio = {
     // Picanha Argentina Importada + Mix de Acompanhamentos Prime — foto enviada
     // pelo restaurante para este prato (fotos-originais/picanha-argentina-mix-prime.webp).
     { ifood: 'b43b3c1c-372e-41c2-9c17-958e26bf58c0', foto: fotos.picanhaArgentinaMixPrime },
+    // Coraçãozinho Na Brasa — foto enviada com o texto "Acompanhamento Arroz Farora
+    // E Vinagrete", que é exatamente a descrição deste prato no iFood (e só dele);
+    // a foto mostra os espetinhos de coraçãozinho (fotos-originais/coracaozinho-na-brasa.png).
+    { ifood: '741c35a2-71ea-4b1a-9735-a638d88f462a', foto: fotos.coracaozinhoNaBrasa },
   ],
 
   /**

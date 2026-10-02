@@ -78,6 +78,13 @@ export const fotos = {
     avif: 'images/pratos/picanha-argentina-mix-prime.avif',
     alt: 'Picanha fatiada na chapa, com batata frita com cheddar e bacon, arroz, farofa, vinagrete e tropeiro',
   },
+  // fotos-originais/coracaozinho-na-brasa.png — enviada com o texto "Acompanhamento
+  // Arroz Farora E Vinagrete", que é a descrição do "Coraçãozinho Na Brasa" no iFood
+  coracaozinhoNaBrasa: {
+    src: 'images/pratos/coracaozinho-na-brasa.jpg',
+    avif: 'images/pratos/coracaozinho-na-brasa.avif',
+    alt: 'Espetinhos de coraçãozinho de frango na brasa',
+  },
   // fotos-originais/ass4.avif
   saladaCroutons: {
     src: 'images/pratos/salada-croutons.jpg',

@@ -21,10 +21,6 @@ export const vitrineCardapio = {
     // Porção de Picanha Nobre Nacional + Mix de Acompanhamentos Premium — foto
     // enviada pelo restaurante para este prato (fotos-originais/porcao-picanha-mix-premium.png).
     { ifood: 'b6415976-5afd-461b-aaa5-8eae2d484071', foto: fotos.porcaoPicanhaMixPremium },
-    // Salada Tropical Wellness + Frango Grelhado — única salada do iFood; a foto
-    // (fotos-originais/ass4.avif) mostra folhas, tomate-cereja, cebola roxa,
-    // croûtons, gergelim preto e o molho, como na descrição.
-    { ifood: '683a5444-1f78-4c22-a463-27d878174d34', foto: fotos.saladaCroutons },
     // Picanha Argentina Importada + Mix de Acompanhamentos Prime — foto enviada
     // pelo restaurante para este prato (fotos-originais/picanha-argentina-mix-prime.webp).
     { ifood: 'b43b3c1c-372e-41c2-9c17-958e26bf58c0', foto: fotos.picanhaArgentinaMixPrime },
@@ -35,6 +31,11 @@ export const vitrineCardapio = {
     // E Vinagrete", que é exatamente a descrição deste prato no iFood (e só dele);
     // a foto mostra os espetinhos de coraçãozinho (fotos-originais/coracaozinho-na-brasa.png).
     { ifood: '741c35a2-71ea-4b1a-9735-a638d88f462a', foto: fotos.coracaozinhoNaBrasa },
+    // Pedido do restaurante: pratos de carne primeiro, a salada por último.
+    // Salada Tropical Wellness + Frango Grelhado — única salada do iFood; a foto
+    // (fotos-originais/ass4.avif) mostra folhas, tomate-cereja, cebola roxa,
+    // croûtons, gergelim preto e o molho, como na descrição.
+    { ifood: '683a5444-1f78-4c22-a463-27d878174d34', foto: fotos.saladaCroutons },
   ],
 
   /**

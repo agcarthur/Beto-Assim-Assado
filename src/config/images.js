@@ -32,7 +32,7 @@ export const logo = {
  * Os nomes dos arquivos descrevem o que aparece na foto, não o nome do prato
  * no cardápio, que ainda não foi informado.
  */
-const fotos = {
+export const fotos = {
   // fotos-originais/ass5.avif
   chapaCompleta: {
     src: 'images/pratos/chapa-carne-acompanhamentos.jpg',
@@ -86,18 +86,6 @@ export const hero = {
   alt: 'Vídeo do Beto Assim & Assado: pratos na chapa, salão e música ao vivo',
 };
 
-/**
- * Pratos da seção "Cardápio". `nome`, `descricao` e `preco` ficam `null`
- * até o restaurante informar; não preencher por suposição.
- */
-export const pratos = [
-  { id: 'cortes-na-chapa', nome: null, descricao: null, preco: null, foto: fotos.cortesNaChapa },
-  { id: 'carne-molho-branco', nome: null, descricao: null, preco: null, foto: fotos.carneMolhoBranco },
-  { id: 'chapas-frango-e-carne', nome: null, descricao: null, preco: null, foto: fotos.chapasFrangoECarne },
-  { id: 'ovos-torresmo-couve', nome: null, descricao: null, preco: null, foto: fotos.ovosTorresmoCouve },
-  { id: 'salada-croutons', nome: null, descricao: null, preco: null, foto: fotos.saladaCroutons },
-];
-
 /** Fotos da galeria. A primeira aparece maior. */
 export const galeria = [
   fotos.chapaCompleta,
@@ -112,7 +100,6 @@ export function todasAsImagens() {
   const imagens = [
     ...Object.values(logo),
     ...(hero ? [hero] : []),
-    ...pratos.map((p) => p.foto).filter(Boolean),
     ...galeria,
   ];
   const caminhos = imagens.flatMap((img) => [img.src, img.avif, img.video, img.webm, img.poster].filter(Boolean));

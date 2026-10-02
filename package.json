@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run check:images && vite build",
+    "build": "npm run check:images && npm run check:cardapio && vite build",
     "preview": "vite preview",
     "check:images": "node scripts/check-images.mjs",
-    "build:preview": "npm run build && node scripts/build-preview.mjs"
+    "build:preview": "npm run build && node scripts/build-preview.mjs",
+    "check:cardapio": "node scripts/verificar-cardapio.mjs"
   },
   "devDependencies": {
     "vite": "^8.3.2"

@@ -1,6 +1,7 @@
 import './styles.css';
-import { modoRascunho, logo, hero, pratos, galeria } from './config/images.js';
+import { modoRascunho, logo, hero, galeria } from './config/images.js';
 import { contato, linkWhatsApp, linkReserva } from './config/contato.js';
+import { montarSecaoCardapio } from './cardapio/render.js';
 
 const $ = (id) => document.getElementById(id);
 
@@ -76,55 +77,8 @@ if (hero?.video) {
 else if (modoRascunho) heroFoto.append(espacoFoto('Foto da picanha · aguardando envio'));
 else heroFoto.hidden = true;
 
-// Cardápio
-const listaPratos = $('lista-pratos');
-for (const prato of pratos) {
-  const card = document.createElement('article');
-  card.className = 'prato';
-  const moldura = document.createElement('div');
-  moldura.className = 'prato__foto';
-  moldura.append(prato.foto ? img(prato.foto) : espacoFoto('Foto do prato · aguardando envio'));
-  card.append(moldura);
-  // Sem nome informado: em rascunho mostra "a definir"; no site oficial, só a foto.
-  if (!prato.nome && !modoRascunho) {
-    listaPratos.append(card);
-    continue;
-  }
-  const corpo = document.createElement('div');
-  corpo.className = 'prato__corpo';
-  const titulo = document.createElement('h3');
-  titulo.textContent = prato.nome ?? 'Nome do prato a definir';
-  if (!prato.nome) titulo.className = 'a-definir';
-  corpo.append(titulo);
-  if (prato.descricao) {
-    const p = document.createElement('p');
-    p.textContent = prato.descricao;
-    corpo.append(p);
-  }
-  if (prato.preco) {
-    const preco = document.createElement('span');
-    preco.className = 'prato__preco';
-    preco.textContent = prato.preco;
-    corpo.append(preco);
-  }
-  card.append(corpo);
-  listaPratos.append(card);
-}
-if (!pratos.length && modoRascunho) {
-  for (let i = 0; i < 3; i++) {
-    const card = document.createElement('article');
-    card.className = 'prato prato--pendente';
-    const moldura = document.createElement('div');
-    moldura.className = 'prato__foto';
-    moldura.append(espacoFoto('Foto do prato · aguardando envio'));
-    const corpo = document.createElement('div');
-    corpo.className = 'prato__corpo';
-    corpo.innerHTML = '<h3>Nome do prato</h3><p>Nome, descrição e preço entram quando forem informados.</p>';
-    card.append(moldura, corpo);
-    listaPratos.append(card);
-  }
-}
-$('cardapio').hidden = !pratos.length && !modoRascunho;
+// Cardápio (conteúdo oficial em conteudo/cardapio-ifood.md)
+$('cardapio').hidden = !montarSecaoCardapio($('menu-cardapio'), { img });
 
 // Galeria
 const listaGaleria = $('lista-galeria');

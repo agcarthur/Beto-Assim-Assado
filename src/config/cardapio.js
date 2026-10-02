@@ -25,6 +25,9 @@ export const vitrineCardapio = {
     // Picanha Argentina Importada + Mix de Acompanhamentos Prime — foto enviada
     // pelo restaurante para este prato (fotos-originais/picanha-argentina-mix-prime.webp).
     { ifood: 'b43b3c1c-372e-41c2-9c17-958e26bf58c0', foto: fotos.picanhaArgentinaMixPrime },
+    // Chorizo Angus Estância 92 + Tropeiro Mineiro — foto enviada pelo restaurante
+    // para este prato (fotos-originais/chorizo-angus-tropeiro.png).
+    { ifood: 'f522ca44-af25-41cf-97e9-4e0024d29c7b', foto: fotos.chorizoAngusTropeiro },
     // Coraçãozinho Na Brasa — foto enviada com o texto "Acompanhamento Arroz Farora
     // E Vinagrete", que é exatamente a descrição deste prato no iFood (e só dele);
     // a foto mostra os espetinhos de coraçãozinho (fotos-originais/coracaozinho-na-brasa.png).

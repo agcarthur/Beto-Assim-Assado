@@ -85,6 +85,13 @@ export const fotos = {
     avif: 'images/pratos/coracaozinho-na-brasa.avif',
     alt: 'Espetinhos de coraçãozinho de frango na brasa',
   },
+  // fotos-originais/chorizo-angus-tropeiro.png — enviada como foto do
+  // "Chorizo Angus Estância 92 + Tropeiro Mineiro"
+  chorizoAngusTropeiro: {
+    src: 'images/pratos/chorizo-angus-tropeiro.jpg',
+    avif: 'images/pratos/chorizo-angus-tropeiro.avif',
+    alt: 'Chorizo fatiado na chapa, com arroz, tropeiro com torresmo, farofa e vinagrete',
+  },
   // fotos-originais/ass4.avif
   saladaCroutons: {
     src: 'images/pratos/salada-croutons.jpg',

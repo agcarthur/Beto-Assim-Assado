@@ -110,9 +110,6 @@ for (const el of document.querySelectorAll('[data-acao]')) {
     el.hidden = true;
   }
 }
-for (const el of document.querySelectorAll('[data-whats-texto]')) {
-  el.textContent = contato.whatsappExibicao ? `WhatsApp ${contato.whatsappExibicao}` : 'WhatsApp';
-}
 
 // Dados de contato
 const dados = $('dados-contato');

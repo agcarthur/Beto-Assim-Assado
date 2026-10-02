@@ -4,18 +4,20 @@
  * correspondente aparece como "link a definir" (em modo rascunho) ou some.
  */
 export const contato = {
-  /** Número do WhatsApp só com dígitos, com DDI e DDD. Ex.: '5531900000000' */
-  whatsapp: null,
-  /** Número como deve aparecer na tela. Ex.: '(31) 90000-0000' */
-  whatsappExibicao: null,
+  /** Número do WhatsApp só com dígitos, com DDI e DDD (do link enviado pelo restaurante). */
+  whatsapp: '5533988173429',
+  /** Número como aparece na seção de contato. */
+  whatsappExibicao: '(33) 98817-3429',
+  /** Link do WhatsApp enviado pelo restaurante; usado como está em todos os botões de WhatsApp. */
+  whatsappUrl: 'https://api.whatsapp.com/send/?phone=5533988173429&text=Ol%C3%A1%2C+tudo+bem%3F+Como+podemos+te+ajudar%3F&type=phone_number&app_absent=0',
   /** Mensagem pré-preenchida ao abrir o WhatsApp para reservar. */
   mensagemReserva: 'Olá! Gostaria de reservar uma mesa.',
   /**
    * Link de reserva (sistema de reservas, formulário etc.).
    * Se ficar `null` e houver WhatsApp, "Reservar mesa" abre o WhatsApp.
    */
-  reservaUrl: null,
-  /** Link da loja no iFood. */
+  reservaUrl: 'https://api.whatsapp.com/send/?phone=5533988173429&text=Ol%C3%A1%2C+tudo+bem%3F+Como+podemos+te+ajudar%3F&type=phone_number&app_absent=0', // link enviado pelo restaurante para "Reservar mesa"
+  /** Link da página da loja no iFood (aguardando o restaurante enviar). */
   ifoodUrl: null,
   /** Instagram completo. Ex.: 'https://instagram.com/perfil' */
   instagramUrl: null,
@@ -26,6 +28,7 @@ export const contato = {
 };
 
 export function linkWhatsApp(mensagem) {
+  if (contato.whatsappUrl) return contato.whatsappUrl;
   if (!contato.whatsapp) return null;
   const texto = mensagem ? `?text=${encodeURIComponent(mensagem)}` : '';
   return `https://wa.me/${contato.whatsapp}${texto}`;

@@ -40,7 +40,7 @@ function espacoFoto(rotulo, className) {
 }
 
 // Logos
-for (const id of ['logo-topo', 'logo-hero', 'logo-rodape']) {
+for (const id of ['logo-topo', 'logo-rodape']) {
   $(id).src = logo.emblema.src;
   $(id).alt = logo.emblema.alt;
 }

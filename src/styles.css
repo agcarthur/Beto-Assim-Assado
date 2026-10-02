@@ -117,34 +117,27 @@ h1, h2, h3 { font-family: var(--serifa); font-weight: 600; line-height: 1.15; te
 .topo__nav a:hover { color: var(--ouro-claro); border-bottom-color: var(--ouro); }
 .topo__menu { display: none; }
 
-/* Hero */
+/* Hero: vídeo e, abaixo dele, os botões.
+   A grade de 2 colunas (5/12 + 7/12) é a mesma de quando havia a logo à esquerda,
+   para o vídeo manter exatamente o mesmo tamanho; ele só é deslocado para o centro. */
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  align-items: center;
   gap: clamp(2rem, 5vw, 5rem);
   max-width: var(--largura);
   margin: 0 auto;
   padding: clamp(2rem, 5vw, 4.5rem) var(--gutter) clamp(3rem, 7vw, 6rem);
 }
-.hero__conteudo { display: grid; gap: 2rem; justify-items: start; }
-.hero__logo {
-  /* emblema em placa com filete dourado, para o fundo verde da logo parecer intencional */
-  width: min(420px, calc(100% - 20px));
-  height: auto;
-  margin: 10px;
-  outline: 1px solid var(--linha-ouro);
-  outline-offset: 9px;
-  border-radius: 2px;
-}
+.hero__conteudo { grid-column: 1 / -1; display: grid; gap: 2rem; justify-items: center; }
 .hero__foto {
-  order: 2;
+  grid-column: 2;
   position: relative;
+  /* centraliza na página: volta metade da coluna da esquerda (5/7 desta) mais o espaço entre elas */
+  left: calc(-100% * 5 / 14 - clamp(2rem, 5vw, 5rem) / 2);
   margin: 0;
   aspect-ratio: 4 / 3; /* mesma proporção das fotos enviadas: nada da chapa é cortado */
   width: 100%;
   max-width: 100%;
-  justify-self: end;
 }
 .hero__foto::after {
   /* moldura dourada deslocada */
@@ -376,6 +369,8 @@ a.prato-ifood:hover .prato-ifood__botao { background: var(--ouro-claro); }
 
   .hero { grid-template-columns: minmax(0, 1fr); padding-top: 0; gap: 2rem; }
   .hero__foto {
+    grid-column: 1;
+    left: 0;
     order: 0;
     margin-inline: calc(var(--gutter) * -1);
     width: calc(100% + var(--gutter) * 2);
@@ -383,8 +378,7 @@ a.prato-ifood:hover .prato-ifood__botao { background: var(--ouro-claro); }
   }
   .hero__foto::after { display: none; }
   .hero__foto > * { border-radius: 0; }
-  .hero__conteudo { justify-items: center; text-align: center; }
-  .hero__logo { width: min(320px, 85%); }
+  .hero__conteudo { text-align: center; }
   .hero .acoes { width: 100%; }
   .hero .acoes .botao { flex: 1 1 200px; }
 

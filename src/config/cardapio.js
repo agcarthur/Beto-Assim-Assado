@@ -22,6 +22,9 @@ export const vitrineCardapio = {
     // (fotos-originais/ass4.avif) mostra folhas, tomate-cereja, cebola roxa,
     // croûtons, gergelim preto e o molho, como na descrição.
     { ifood: '683a5444-1f78-4c22-a463-27d878174d34', foto: fotos.saladaCroutons },
+    // Picanha Argentina Importada + Mix de Acompanhamentos Prime — foto enviada
+    // pelo restaurante para este prato (fotos-originais/picanha-argentina-mix-prime.webp).
+    { ifood: 'b43b3c1c-372e-41c2-9c17-958e26bf58c0', foto: fotos.picanhaArgentinaMixPrime },
   ],
 
   /**

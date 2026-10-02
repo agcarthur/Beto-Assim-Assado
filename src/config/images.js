@@ -70,6 +70,14 @@ export const fotos = {
     avif: 'images/pratos/porcao-picanha-mix-premium.avif',
     alt: 'Picanha ao molho de alho na chapa, com mandioca frita, pães de alho e queijo coalho com melaço',
   },
+  // fotos-originais/picanha-argentina-mix-prime.webp — enviada como foto da
+  // "Picanha Argentina Importada + Mix de Acompanhamentos Prime" (é a mesma
+  // imagem de fotos-originais/ass5.avif, usada na galeria)
+  picanhaArgentinaMixPrime: {
+    src: 'images/pratos/picanha-argentina-mix-prime.jpg',
+    avif: 'images/pratos/picanha-argentina-mix-prime.avif',
+    alt: 'Picanha fatiada na chapa, com batata frita com cheddar e bacon, arroz, farofa, vinagrete e tropeiro',
+  },
   // fotos-originais/ass4.avif
   saladaCroutons: {
     src: 'images/pratos/salada-croutons.jpg',

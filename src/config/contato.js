@@ -17,8 +17,8 @@ export const contato = {
    * Se ficar `null` e houver WhatsApp, "Reservar mesa" abre o WhatsApp.
    */
   reservaUrl: 'https://api.whatsapp.com/send/?phone=5533988173429&text=Ol%C3%A1%2C+tudo+bem%3F+Como+podemos+te+ajudar%3F&type=phone_number&app_absent=0', // link enviado pelo restaurante para "Reservar mesa"
-  /** Link da página da loja no iFood (aguardando o restaurante enviar). */
-  ifoodUrl: null,
+  /** Link da página da loja no iFood, enviado pelo restaurante. */
+  ifoodUrl: 'https://www.ifood.com.br/delivery/governador-valadares-mg/beto-assim-e-assado-lagoa-santa-santo-agostinho/f5c03b97-23b1-4aa4-8855-46a7b4e51200',
   /** Instagram completo. Ex.: 'https://instagram.com/perfil' */
   instagramUrl: null,
   /** Endereço como deve aparecer no site. */

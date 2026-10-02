@@ -73,9 +73,10 @@ const fotos = {
 
 /**
  * Mídia principal do HERO: vídeo do restaurante. O original é vertical (9:16,
- * em videos-originais/); esta versão é 4:3, mesma proporção do espaço do hero,
- * com o vídeo inteiro no centro e as laterais preenchidas pelo próprio vídeo
- * desfocado. `poster` é um quadro do vídeo, exibido enquanto ele carrega.
+ * em videos-originais/); esta versão é horizontal 4:3, mesma proporção do
+ * espaço do hero, recortada cena a cena para manter a comida/pessoas em
+ * quadro (ver scripts/gerar-video-hero.sh). `poster` é um quadro do vídeo,
+ * exibido enquanto ele carrega.
  */
 export const hero = {
   video: 'videos/hero/hero-video.mp4',

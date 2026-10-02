@@ -15,6 +15,9 @@ import { fotos } from './images.js';
 
 export const vitrineCardapio = {
   itens: [
+    // Mexidão Mineiro Especial + Baby Beef Estância 92 Grelhado na Brasa — foto
+    // enviada pelo restaurante para este prato (fotos-originais/mexidao-baby-beef.png).
+    { ifood: 'b91709af-508a-40f1-86c7-a34e98054a56', foto: fotos.mexidaoBabyBeef },
     // Porção de Picanha Nobre Nacional + Mix de Acompanhamentos Premium — foto
     // enviada pelo restaurante para este prato (fotos-originais/porcao-picanha-mix-premium.png).
     { ifood: 'b6415976-5afd-461b-aaa5-8eae2d484071', foto: fotos.porcaoPicanhaMixPremium },

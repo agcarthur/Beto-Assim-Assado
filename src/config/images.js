@@ -92,6 +92,13 @@ export const fotos = {
     avif: 'images/pratos/chorizo-angus-tropeiro.avif',
     alt: 'Chorizo fatiado na chapa, com arroz, tropeiro com torresmo, farofa e vinagrete',
   },
+  // fotos-originais/mexidao-baby-beef.png — enviada como foto do
+  // "Mexidão Mineiro Especial + Baby Beef Estância 92 Grelhado na Brasa"
+  mexidaoBabyBeef: {
+    src: 'images/pratos/mexidao-baby-beef.jpg',
+    avif: 'images/pratos/mexidao-baby-beef.avif',
+    alt: 'Baby beef fatiado na chapa e mexidão mineiro com ovos fritos, torresmo e couve',
+  },
   // fotos-originais/ass4.avif
   saladaCroutons: {
     src: 'images/pratos/salada-croutons.jpg',

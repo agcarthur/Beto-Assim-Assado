@@ -63,6 +63,13 @@ export const fotos = {
     avif: 'images/pratos/ovos-torresmo-couve.avif',
     alt: 'Prato com ovos fritos, torresmo e couve',
   },
+  // fotos-originais/porcao-picanha-mix-premium.png — enviada como foto da
+  // "Porção de Picanha Nobre Nacional + Mix de Acompanhamentos Premium"
+  porcaoPicanhaMixPremium: {
+    src: 'images/pratos/porcao-picanha-mix-premium.jpg',
+    avif: 'images/pratos/porcao-picanha-mix-premium.avif',
+    alt: 'Picanha ao molho de alho na chapa, com mandioca frita, pães de alho e queijo coalho com melaço',
+  },
   // fotos-originais/ass4.avif
   saladaCroutons: {
     src: 'images/pratos/salada-croutons.jpg',

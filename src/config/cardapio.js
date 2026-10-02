@@ -15,6 +15,9 @@ import { fotos } from './images.js';
 
 export const vitrineCardapio = {
   itens: [
+    // Porção de Picanha Nobre Nacional + Mix de Acompanhamentos Premium — foto
+    // enviada pelo restaurante para este prato (fotos-originais/porcao-picanha-mix-premium.png).
+    { ifood: 'b6415976-5afd-461b-aaa5-8eae2d484071', foto: fotos.porcaoPicanhaMixPremium },
     // Salada Tropical Wellness + Frango Grelhado — única salada do iFood; a foto
     // (fotos-originais/ass4.avif) mostra folhas, tomate-cereja, cebola roxa,
     // croûtons, gergelim preto e o molho, como na descrição.

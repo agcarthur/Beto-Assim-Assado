@@ -10,6 +10,17 @@ export const localizacao = {
   endereco: ['Avenida José Ivair F. Mattos, nº 405', 'Santo Agostinho — Governador Valadares/MG'],
   /** Texto pesquisado no Google Maps (nome + endereço informado). */
   consultaMapa: 'Beto Assim & Assado, Avenida José Ivair F. Mattos, 405, Santo Agostinho, Governador Valadares - MG',
+  /**
+   * Fundo permanente da seção: print real do Google Maps enviado pelo restaurante
+   * (original em fotos-originais/mapa-google-print.webp), recortado só na área do
+   * mapa. Aparece sempre, mesmo onde o mapa interativo é bloqueado.
+   */
+  imagemMapa: {
+    src: 'images/mapa/mapa-localizacao.jpg',
+    avif: 'images/mapa/mapa-localizacao.avif',
+    alt: 'Mapa das ruas em volta do Beto Assim & Assado',
+    credito: 'Dados do mapa ©2026 Google',
+  },
 };
 
 const q = () => encodeURIComponent(localizacao.consultaMapa);

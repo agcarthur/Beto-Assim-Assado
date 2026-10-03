@@ -3,12 +3,14 @@ import { existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { todasAsImagens, hero } from '../src/config/images.js';
 import { vitrineCardapio } from '../src/config/cardapio.js';
+import { localizacao } from '../src/config/localizacao.js';
 
 const publicDir = new URL('../public', import.meta.url).pathname;
 let falhas = 0;
 
 const fotosCardapio = vitrineCardapio.itens.flatMap(({ foto }) => (foto ? [foto.src, foto.avif] : []));
-for (const caminho of new Set([...todasAsImagens(), ...fotosCardapio.filter(Boolean)])) {
+const mapa = [localizacao.imagemMapa.src, localizacao.imagemMapa.avif];
+for (const caminho of new Set([...todasAsImagens(), ...fotosCardapio.filter(Boolean), ...mapa])) {
   const arquivo = join(publicDir, caminho);
   if (!existsSync(arquivo) || statSync(arquivo).size === 0) {
     console.error(`✗ ausente ou vazio: ${caminho}`);

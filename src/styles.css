@@ -317,16 +317,27 @@ a.prato-ifood:hover .prato-ifood__botao { background: var(--ouro-claro); }
   height: 100%;
   border: 0;
 }
-.localizacao__mapa--indisponivel::after {
-  content: 'Mapa indisponível nesta visualização · use os botões para abrir no Google Maps';
+/* Imagem real do mapa: mesma caixa do iframe, com o restaurante (ponto 1233×452 da
+   imagem de 1874×898) no centro dela — o mesmo ponto onde o iframe põe o endereço.
+   Cresce acima do tamanho natural só em telas muito largas, para nunca faltar mapa. */
+.localizacao__camada { position: absolute; top: 0; left: 0; width: calc(100% + var(--card-dir)); height: 100%; }
+.localizacao__camada img {
   position: absolute;
-  right: var(--gutter);
-  bottom: 1rem;
-  left: var(--gutter);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-align: right;
-  color: var(--claro-suave);
+  top: 50%;
+  left: 50%;
+  width: max(1874px, 75.993%);
+  max-width: none;
+  height: auto;
+  transform: translate(-65.795%, -50.334%);
+}
+.localizacao__credito {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  padding: 1px 6px;
+  font: 11px/1.5 Arial, sans-serif;
+  color: #444;
+  background: rgba(255, 255, 255, 0.8);
 }
 .localizacao__conteudo {
   width: 100%;
@@ -365,6 +376,10 @@ a.prato-ifood:hover .prato-ifood__botao { background: var(--ouro-claro); }
     -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 160px), transparent);
     mask-image: linear-gradient(to bottom, #000 calc(100% - 160px), transparent);
   }
+  .localizacao__camada { width: 100%; height: calc(2 * var(--janela) - 24px); }
+  /* sobe a imagem um pouco para o nome do restaurante no mapa não encostar no card */
+  .localizacao__camada img { transform: translate(-65.795%, calc(-50.334% - 24px)); }
+  .localizacao__credito { top: 6px; bottom: auto; }
   .localizacao__conteudo { padding: var(--janela) var(--gutter) var(--gutter); }
   .localizacao__card { width: 100%; padding: 1.5rem; border-radius: 14px; }
   .localizacao__acoes .botao { flex-basis: 100%; }

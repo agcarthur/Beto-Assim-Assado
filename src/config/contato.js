@@ -22,9 +22,14 @@ export const contato = {
   /** Instagram completo. Ex.: 'https://instagram.com/perfil' */
   instagramUrl: null,
   /** Endereço como deve aparecer no site. */
-  endereco: null,
+  endereco: 'Av. José Ivair F. Mattos, 405 - Santo Agostinho, Gov. Valadares',
   /** Horários, um item por linha. Ex.: ['Ter a Dom · 11h às 16h'] */
-  horarios: [],
+  horarios: [
+    'Quarta a sexta · 18:30–23:30',
+    'Sábado e domingo · 11:30–23:30',
+    'Almoço: sábado e domingo · 11:00–14:00',
+    'Segunda e terça · Fechado',
+  ],
 };
 
 export function linkWhatsApp(mensagem) {
